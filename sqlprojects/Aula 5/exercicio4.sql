@@ -1,0 +1,24 @@
+CREATE SCHEMA IF NOT EXISTS mydb;
+
+SET search_path TO mydb;
+
+CREATE TABLE IF NOT EXISTS veículo (
+  placa CHAR(7) PRIMARY KEY,
+  marca VARCHAR(20) NOT NULL,
+  modelo VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS vaga (
+  nome VARCHAR(10) PRIMARY KEY
+);
+
+CREATE TABLE IF NOT EXISTS ocupa (
+  valor FLOAT NOT NULL,
+  "Início" TIMESTAMP NOT NULL,
+  "Fim" TIMESTAMP NOT NULL,
+  veículo_placa CHAR(7) NOT NULL,
+  vaga_nome VARCHAR(10) NOT NULL,
+  PRIMARY KEY (veículo_placa, vaga_nome),
+  FOREIGN KEY (veículo_placa) REFERENCES veículo (placa) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  FOREIGN KEY (vaga_nome) REFERENCES vaga (nome) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
